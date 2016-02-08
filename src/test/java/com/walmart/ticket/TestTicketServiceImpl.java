@@ -11,6 +11,7 @@ import org.easymock.TestSubject;
 import org.easymock.Mock;
 import org.junit.Test;
 
+import static org.easymock.EasyMock.niceMock;
 import static org.junit.Assert.*;
 
 import org.easymock.*;
@@ -35,12 +36,13 @@ public class TestTicketServiceImpl extends EasyMockSupport{
 
     @Test
     public void testNumSeatsAvailable() {
-        LevelService mockLevel = mock(LevelService.class);
+        LevelService mockLevel = niceMock(LevelService.class);
         service.setLevelService(mockLevel);
-        expect(levelService.getAvailableSeats(1)).andReturn(1);
+        Capture<Integer> capture =Capture.newInstance();
+        expect(mockLevel.getAvailableSeats(captureInt(capture))).andReturn(1);
         replayAll();
         int returner = service.numSeatsAvailable(Optional.of(1));
-        assertEquals("numSeatsAvailable should be one ", returner,1);
+        assertEquals("numSeatsAvailable should be one ", returner,capture.getValue().intValue());
         verifyAll();
 
     }
