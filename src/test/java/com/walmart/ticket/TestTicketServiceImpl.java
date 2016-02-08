@@ -38,10 +38,10 @@ public class TestTicketServiceImpl extends EasyMockSupport{
         LevelService mockLevel = mock(LevelService.class);
         service.setLevelService(mockLevel);
         expect(levelService.getAvailableSeats(1)).andReturn(1);
-        replayAll(); // 4
-        verifyAll();
+        replayAll();
         int returner = service.numSeatsAvailable(Optional.of(1));
-        assertEquals("numSeatsAvailable should be one ", 1,1);
+        assertEquals("numSeatsAvailable should be one ", returner,1);
+        verifyAll();
 
     }
 

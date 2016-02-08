@@ -34,6 +34,19 @@ public class TestSeatHoldServiceImpl{
         SeatHold seatHold = service.create(seats);
         seatHold.getLevelsAndSeatsReserved().values().stream().forEach(p -> p.stream().forEach( q -> assertTrue("State needs to update to Pending", q.state == State.PENDING)));
     }
+    @Test
+    public void testTimeoutUpdate() {
+        SeatHoldServiceImpl service = new SeatHoldServiceImpl();
+        Map<Integer, List<Seat>> seats = TestDataGeneratorUtils.getSomeSeatsMapping();
+        SeatHold seatHold = service.create(seats);
+        try {
+            Thread.sleep(30000);
+        } catch (InterruptedException e) {
+            fail();
+        }
+        if(service.update(seatHold.id).isPresent())
+            fail();
+    }
 
     @Test
     public void testUpdate() {
@@ -41,7 +54,8 @@ public class TestSeatHoldServiceImpl{
         Map<Integer, List<Seat>> seats = TestDataGeneratorUtils.getSomeSeatsMapping();
         SeatHold seatHold = service.create(seats);
         service.update(seatHold.id);
-        seatHold.getLevelsAndSeatsReserved().values().stream().forEach(p -> p.stream().forEach( q -> assertTrue("State needs to update to Reserved", q.state == State.RESERVED)));
-
+        if(service.update(seatHold.id).isPresent())
+            seatHold.getLevelsAndSeatsReserved().values().stream().forEach(p -> p.stream().forEach( q -> assertEquals("State needs to update to Reserved", q.state, State.RESERVED)));
+        else fail();
     }
 }
