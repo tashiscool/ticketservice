@@ -20,11 +20,14 @@ public class SeatHoldServiceImpl implements SeatHoldService {
         return reservedSeats.put(id,seatHold);
     }
 
-    public String update(String seatHoldId) {
+    public Optional<String> update(String seatHoldId) {
         SeatHold heldSeat = reservedSeats.get(seatHoldId);
-        if(System.currentTimeMillis() - heldSeat.createdTime > TIMEOUT_ALLOWED )
+        if(System.currentTimeMillis() - heldSeat.createdTime > TIMEOUT_ALLOWED ) {
             heldSeat.levelsAndSeatsReserved.values().stream().flatMap(l -> l.stream())
-                .collect(Collectors.toList()).stream().map(p-> p.withState(State.RESERVED));
-        return "Confirmation # " + seatHoldId;
+                    .collect(Collectors.toList()).stream().map(p -> p.withState(State.RESERVED));
+            return Optional.of("Confirmation # " + seatHoldId);
+        }
+        else
+            return Optional.empty();
     }
 }

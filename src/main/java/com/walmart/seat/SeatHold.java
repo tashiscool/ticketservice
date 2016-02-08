@@ -18,6 +18,7 @@ public class SeatHold {
         levelsAndSeatsReserved.values().stream().flatMap(l -> l.stream())
                 .collect(Collectors.toList()).stream().map(p->p.withState(State.PENDING));
         this.levelsAndSeatsReserved = levelsAndSeatsReserved;
+        this.createdTime = System.currentTimeMillis();
     }
 
     public Map<Integer, List<Seat>> getLevelsAndSeatsReserved() {

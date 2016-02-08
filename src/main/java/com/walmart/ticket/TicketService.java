@@ -35,7 +35,7 @@ public interface TicketService {
      * @param seatHoldId the seat hold identifier
      * @param customerEmail the email address of the customer to which the seat hold
     is assigned
-     * @return a reservation confirmation code
+     * @return a reservation confirmation code or empty if timed out (could be better handled via exception)
      */
     String reserveSeats( int seatHoldId, String customerEmail);
 

@@ -66,7 +66,7 @@ public class TestTicketServiceImpl extends EasyMockSupport{
         service.setLevelService(mockLevel);
         SeatHoldService mockSeats = mock(SeatHoldService.class);
         service.setSeatHoldService(mockSeats);
-        expect(mockSeats.update("1")).andReturn("Confirmation # " + 1);
+        expect(mockSeats.update("1")).andReturn(Optional.of("Confirmation # " + 1));
         replayAll();
         service.reserveSeats(1, "tashdid@gmail.com");
         verifyAll();

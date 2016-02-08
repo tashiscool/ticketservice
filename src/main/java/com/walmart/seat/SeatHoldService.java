@@ -2,6 +2,7 @@ package com.walmart.seat;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by tash on 2/6/16.
@@ -19,5 +20,5 @@ public interface SeatHoldService {
      * @param seatHoldId
      * @return
      */
-    public String update(String seatHoldId);
+    public Optional<String> update(String seatHoldId);
 }

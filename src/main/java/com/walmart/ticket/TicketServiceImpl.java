@@ -35,7 +35,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     public String reserveSeats(int seatHoldId, String customerEmail) {
-        return seatHoldService.update(String.valueOf(seatHoldId));
+        return seatHoldService.update(String.valueOf(seatHoldId)).orElse("");
     }
 
     @Override
